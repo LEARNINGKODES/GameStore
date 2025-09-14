@@ -2,10 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 📱 Escalado móvil -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JLMC Content</title>
   <style>
-    /* 🎨 Colores base */
     :root {
       --verde: #34A853;
       --rojo: #E63946;
@@ -30,10 +29,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    header {
-      text-align: center;
-      padding: 15px;
-    }
+    header { text-align: center; padding: 15px; }
     header img {
       width: 90px;
       border-radius: 50%;
@@ -47,7 +43,6 @@
     }
     header h1 {
       font-size: 1.8rem;
-      line-height: 2rem;
       margin-bottom: 5px;
       background: linear-gradient(90deg, var(--verde), var(--rojo), var(--azul));
       background-size: 300% 300%;
@@ -62,10 +57,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    section {
-      max-width: 95%;
-      margin: 15px auto;
-    }
+    section { max-width: 95%; margin: 15px auto; }
     section h2 {
       text-align: center;
       margin-bottom: 10px;
@@ -124,6 +116,57 @@
       border: 1px solid rgba(255,255,255,0.4);
     }
 
+    /* 📂 Lista de archivos */
+    #listaArchivos {
+      text-align: left;
+      margin-top: 10px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.05);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    #listaArchivos li {
+      margin: 2px 0;
+      padding-left: 5px;
+    }
+
+    /* 📊 Barra de progreso */
+    .progress-container {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin: 12px 0;
+      height: 25px;
+      overflow: hidden;
+      border: 1px solid var(--verde);
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: repeating-linear-gradient(
+        45deg,
+        var(--verde),
+        var(--verde) 10px,
+        var(--azul) 10px,
+        var(--azul) 20px
+      );
+      background-size: 200% 200%;
+      animation: stripes 1s linear infinite;
+      text-align: center;
+      color: var(--blanco);
+      font-size: 0.9rem;
+      font-weight: bold;
+      line-height: 25px;
+      transition: width 0.3s ease;
+    }
+    @keyframes stripes {
+      from { background-position: 0 0; }
+      to   { background-position: 40px 0; }
+    }
+
     .socials img {
       width: 40px;
       margin: 5px;
@@ -148,19 +191,30 @@
     <p>Creado por JLMC24</p>
   </header>
 
+  <!-- Generador contents.json -->
   <section>
     <h2>Generar contents.json</h2>
     <div class="card">
       <label class="file-input">
-        <span>📂 Seleccionar carpeta</span>
-        <input type="file" id="carpeta" webkitdirectory directory multiple>
+        <span>Seleccionar carpeta</span>
+        <input type="file" id="carpeta" webkitdirectory directory multiple onchange="mostrarArchivos()">
       </label>
+
+      <!-- Lista de archivos cargados -->
+      <ul id="listaArchivos"></ul>
+
       <button class="btn" onclick="preConfirm()">Generar</button>
-      <progress id="progreso" value="0" max="100" style="width:100%;"></progress>
+
+      <!-- Barra de progreso -->
+      <div class="progress-container" id="progressContainer" style="display:none;">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+
       <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar contents.json</button>
     </div>
   </section>
 
+  <!-- Manifest Generator -->
   <section>
     <h2>Generar manifest.json</h2>
     <div class="card">
@@ -178,25 +232,133 @@
     </div>
   </section>
 
+  <!-- Redes Sociales -->
   <section>
     <h2>Mis Redes</h2>
     <div class="card socials">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" onclick="window.open('https://www.youtube.com/channel/UC0VNq66Sf4HEAzGlOD45FfQ')">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" onclick="window.open('https://discord.gg/PrJHvVqqVy')">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok" onclick="window.open('https://www.tiktok.com/@neomc1')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" onclick="window.open('https://instagram.com')">
     </div>
   </section>
 
+  <!-- Descargas -->
   <section>
     <h2>Descargas Oficiales</h2>
     <div class="card">
-      <a href="https://www.atom.bio/NEOMC11" class="btn">🌐 Ir a descargas oficiales</a>
+      <a href="https://www.atom.bio/NEOMC11" class="btn">Ir a descargas oficiales</a>
     </div>
   </section>
 
   <footer>
     © 2025 JLMC24
   </footer>
+
+  <script>
+    function mostrarArchivos() {
+      const lista = document.getElementById("listaArchivos");
+      lista.innerHTML = "";
+      const archivos = document.getElementById("carpeta").files;
+      if (!archivos.length) {
+        lista.innerHTML = "<li>⚠️ No se seleccionaron archivos</li>";
+        return;
+      }
+      for (let i = 0; i < archivos.length; i++) {
+        let ruta = archivos[i].webkitRelativePath || archivos[i].name;
+        const li = document.createElement("li");
+        li.textContent = ruta;
+        lista.appendChild(li);
+      }
+    }
+
+    function preConfirm() {
+      const archivos = document.getElementById("carpeta").files;
+      if (!archivos.length) {
+        alert("⚠️ Sube una carpeta primero.");
+        return;
+      }
+      generar();
+    }
+
+    function generar() {
+      const input = document.getElementById("carpeta");
+      const archivos = input.files;
+      const progressContainer = document.getElementById("progressContainer");
+      const progressBar = document.getElementById("progressBar");
+      const data = { content: [] };
+
+      progressContainer.style.display = "block";
+      progressBar.style.width = "0%";
+      progressBar.textContent = "0%";
+
+      let i = 0;
+      function procesar() {
+        if (i < archivos.length) {
+          let ruta = archivos[i].webkitRelativePath.split("/").slice(1).join("/");
+          if (ruta) {
+            data.content.push({ path: ruta });
+          }
+          i++;
+          let porcentaje = Math.round((i / archivos.length) * 100);
+          progressBar.style.width = porcentaje + "%";
+          progressBar.textContent = porcentaje + "%";
+          setTimeout(procesar, 30);
+        } else {
+          window.generatedJSON = JSON.stringify(data, null, 4);
+          document.getElementById("descargarBtn").style.display = "inline-block";
+          progressBar.style.width = "100%";
+          progressBar.textContent = "Listo";
+        }
+      }
+      procesar();
+    }
+
+    function descargar() {
+      const blob = new Blob([window.generatedJSON], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "contents.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function generarManifest() {
+      const nombre = document.getElementById("nombre").value;
+      const autor = document.getElementById("autor").value;
+      const descripcion = document.getElementById("descripcion").value;
+      const version = document.getElementById("version").value.split(".").map(Number);
+      const minVersion = document.getElementById("minVersion").value.split(".").map(Number);
+      const tipo = document.getElementById("tipo").value;
+
+      const manifest = {
+        format_version: 2,
+        metadata: { authors: [autor] },
+        header: {
+          name: nombre,
+          description: descripcion,
+          min_engine_version: minVersion,
+          uuid: crypto.randomUUID(),
+          version: version
+        },
+        modules: [
+          {
+            type: tipo,
+            uuid: crypto.randomUUID(),
+            version: version
+          }
+        ]
+      };
+
+      const blob = new Blob([JSON.stringify(manifest, null, 4)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "manifest.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
