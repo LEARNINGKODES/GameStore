@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- 📱 Escalado móvil -->
   <title>JLMC Content</title>
   <style>
-    /* 🎨 Paleta basada en tu logo */
+    /* 🎨 Colores base */
     :root {
       --verde: #34A853;
       --rojo: #E63946;
@@ -14,79 +15,47 @@
       --blanco: #ffffff;
     }
 
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       font-family: 'Poppins', sans-serif;
       color: var(--blanco);
-    }
-
-    /* 🌌 Fondo gradiente animado con overlay pixelado */
-    body {
       background: linear-gradient(270deg, var(--verde), var(--azul));
       background-size: 400% 400%;
       animation: gradientRotate 20s linear infinite;
-      position: relative;
     }
-
     @keyframes gradientRotate {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    body::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAMElEQVR42mP8z8AARLzg////w8DAwMhABxgYGJiZmBnEwMDAxMDA8P///w8DAwMjIAACkOwYlgkGL0AAAAASUVORK5CYII=");
-      opacity: 0.25;
-      image-rendering: pixelated;
-      pointer-events: none;
-    }
-
     header {
       text-align: center;
-      padding: 20px;
-      position: relative;
-      z-index: 2;
+      padding: 15px;
     }
-
     header img {
-      width: 120px;
-      border-radius: 100% ;
+      width: 90px;
+      border-radius: 50%;
       margin-bottom: 10px;
-      border: 10px black;
-      border-color: black;
-      box-shadow: 0 0 15px #00ffcc, 0 0 25px #0066ff, 0 0 35px #ff004c;
+      box-shadow: 0 0 15px #00ffcc, 0 0 25px #0066ff;
       animation: glow 3s ease-in-out infinite alternate;
     }
     @keyframes glow {
       from { box-shadow: 0 0 15px #00ffcc, 0 0 25px #0066ff; }
-      to { box-shadow: 0 0 25px #ffcc00, 0 0 40px #ff004c; }
+      to   { box-shadow: 0 0 25px #ffcc00, 0 0 40px #ff004c; }
     }
-
     header h1 {
-      font-size: 3rem;
+      font-size: 1.8rem;
+      line-height: 2rem;
+      margin-bottom: 5px;
       background: linear-gradient(90deg, var(--verde), var(--rojo), var(--azul));
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: gradientText 6s linear infinite;
     }
-
-    header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
+    header p { font-size: 0.9rem; opacity: 0.9; }
     @keyframes gradientText {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -94,245 +63,82 @@
     }
 
     section {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      margin: 20px auto;
+      max-width: 95%;
+      margin: 15px auto;
     }
-
     section h2 {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
       color: var(--beige);
     }
-
     .card {
-      background: rgba(0, 0, 0, 0.45);
-      border: 2px solid var(--marron);
-      border-radius: 16px;
-      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--marron);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 15px;
       text-align: center;
       backdrop-filter: blur(6px);
-      margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
     }
 
-    /* Inputs, textarea y selects */
     input, textarea, select {
-      width: 90%;
+      width: 100%;
       margin: 6px 0;
-      padding: 12px;
+      padding: 10px;
       border-radius: 10px;
-      border: 2px solid var(--verde);
-      outline: none;
-      font-size: 1rem;
+      border: 1.5px solid var(--verde);
       background: rgba(255,255,255,0.1);
       color: var(--blanco);
-      transition: border 0.3s, background 0.3s;
+      font-size: 1rem;
     }
-
     input:focus, textarea:focus, select:focus {
       border-color: var(--rojo);
       background: rgba(255,255,255,0.2);
     }
+    textarea { resize: vertical; min-height: 80px; }
 
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    /* Botones */
     .btn {
-      margin: 10px 5px;
-      padding: 12px 30px;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
       background: var(--verde);
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       color: var(--blanco);
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
+    .btn:hover { background: var(--rojo); }
+    .btn:active { background: var(--azul); }
 
-    .btn:hover {
-      background: var(--rojo);
-      transform: scale(1.08);
-    }
-
-    .btn:active {
-      background: var(--azul);
-      transform: scale(0.95);
-    }
-
-    /* Botón de subir archivo estilizado */
-    .file-input {
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .file-input input[type="file"] {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
+    .file-input { display: block; margin: 10px 0; }
     .file-input span {
-      display: inline-block;
-      padding: 12px 30px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.4);
-      transition: all 0.3s ease;
-    }
-    .file-input span:hover {
-      background: rgba(255,255,255,0.25);
-      transform: scale(1.05);
-    }
-
-    /* Modal para confirmación */
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    .modal-content {
-      background: rgba(20,20,20,0.95);
-      padding: 30px;
-      border-radius: 16px;
+      display: block;
+      padding: 12px;
       text-align: center;
-      max-width: 400px;
-      border: 2px solid #00ffcc;
-      animation: fadeIn 0.4s ease;
-    }
-    .modal-content h3 { margin-bottom: 15px; }
-    .modal-content .btn { margin: 5px; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.4);
     }
 
-    /* Redes sociales */
     .socials img {
-      width: 50px;
-      margin: 10px;
+      width: 40px;
+      margin: 5px;
       cursor: pointer;
-      transition: transform 0.3s, filter 0.3s;
+      transition: 0.3s;
     }
-    .socials img:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 10px var(--azul));
-    }
-
-    a.btn {
-      text-decoration: none;
-      display: inline-block;
-    }
+    .socials img:hover { transform: scale(1.15); }
 
     footer {
       text-align: center;
-      padding: 15px;
-      font-size: 0.9rem;
+      padding: 12px;
+      font-size: 0.8rem;
       background: rgba(0,0,0,0.6);
-      border-top: 2px solid var(--marron);
-      position: relative;
-      z-index: 2;
+      border-top: 1px solid var(--marron);
     }
-    /* 📱 Responsividad: teléfonos y tablets */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  header img {
-    width: 90px;
-  }
-
-  section {
-    margin: 10px;
-    max-width: 100%;
-  }
-
-  .card {
-    padding: 15px;
-  }
-
-  input, textarea, select {
-    width: 100%;
-    font-size: 0.95rem;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-  }
-
-  .file-input span {
-    width: 100%;
-    text-align: center;
-  }
-
-  .socials img {
-    width: 40px;
-    margin: 5px;
-  }
-}
-
-/* 📱 Orientación: Modo vertical (portrait) */
-@media screen and (orientation: portrait) {
-  header h1 {
-    font-size: 2.2rem;
-  }
-  .card {
-    margin: 15px auto;
-  }
-  .btn {
-    font-size: 1rem;
-  }
-}
-
-/* 📱 Orientación: Modo horizontal (landscape) */
-@media screen and (orientation: landscape) {
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  header img {
-    width: 100px;
-  }
-  section {
-    max-width: 90%;
-    margin: 10px auto;
-  }
-  .card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: left;
-  }
-  .card input, .card textarea, .card select {
-    flex: 1 1 45%;
-    margin: 5px;
-  }
-  .btn {
-    flex: 1 1 100%;
-    margin-top: 10px;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -342,7 +148,6 @@
     <p>Creado por JLMC24</p>
   </header>
 
-  <!-- Generador contents.json -->
   <section>
     <h2>Generar contents.json</h2>
     <div class="card">
@@ -350,179 +155,48 @@
         <span>📂 Seleccionar carpeta</span>
         <input type="file" id="carpeta" webkitdirectory directory multiple>
       </label>
-      <br>
       <button class="btn" onclick="preConfirm()">Generar</button>
-      <br>
-      <progress id="progreso" value="0" max="100" style="width:90%;"></progress>
-      <br>
+      <progress id="progreso" value="0" max="100" style="width:100%;"></progress>
       <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar contents.json</button>
     </div>
   </section>
 
-  <!-- Modal Confirmación -->
-  <div id="confirmModal" class="modal">
-    <div class="modal-content">
-      <h3 id="confirmText"></h3>
-      <button class="btn" onclick="confirmar(true)">Sí</button>
-      <button class="btn" onclick="confirmar(false)">No</button>
-    </div>
-  </div>
-
-  <!-- Manifest Generator -->
   <section>
     <h2>Generar manifest.json</h2>
     <div class="card">
-      <input type="text" id="nombre" placeholder="Nombre del paquete"><br>
-      <input type="text" id="autor" placeholder="Autor"><br>
-      <textarea id="descripcion" placeholder="Descripción"></textarea><br>
-      <input type="text" id="version" placeholder="Versión (ej: 1.0.0)"><br>
-      <input type="text" id="minVersion" placeholder="Versión mínima (ej: 1.21.0)"><br>
+      <input type="text" id="nombre" placeholder="Nombre del paquete">
+      <input type="text" id="autor" placeholder="Autor">
+      <textarea id="descripcion" placeholder="Descripción"></textarea>
+      <input type="text" id="version" placeholder="Versión (ej: 1.0.0)">
+      <input type="text" id="minVersion" placeholder="Versión mínima (ej: 1.21.0)">
       <select id="tipo">
         <option value="resources">Resource Pack</option>
         <option value="data">Behavior Pack</option>
         <option value="addon">Addon con script</option>
-      </select><br>
+      </select>
       <button class="btn" onclick="generarManifest()">Generar manifest.json</button>
     </div>
   </section>
 
-  <!-- Redes Sociales -->
   <section>
     <h2>Mis Redes</h2>
     <div class="card socials">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" onclick="window.open('https://www.youtube.com/channel/UC0VNq66Sf4HEAzGlOD45FfQ')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" onclick="window.open('https://discord.gg/PrJHvVqqVy')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok" onclick="window.open('https://www.tiktok.com/@neomc1')">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" onclick="window.open('https://instagram.com')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram">
     </div>
   </section>
 
-  <!-- Descargas -->
   <section>
     <h2>Descargas Oficiales</h2>
     <div class="card">
-      <a href="https://www.atom.bio/NEOMC11" class="btn">Sitio oficia de descargas<br>Texturas de Minecraft <br>NEOCRAFT<BR>Craftsman 0.15.10<BR>Craftsman 0.15.10 (android 14 y 15) </a>
-
+      <a href="https://www.atom.bio/NEOMC11" class="btn">🌐 Ir a descargas oficiales</a>
     </div>
   </section>
 
   <footer>
     © 2025 JLMC24
   </footer>
-
-  <!-- Sonidos Base64 -->
-  <audio id="hoverSound" src="data:audio/ogg;base64,T2dnUwACAAAAAAAAAAA+Wb1fAAAAANvN6fUBHgF2b3JiaXMAAAAAAkSsAAAAAAAAgLsAAAAAAAC4AU9nZ1MAAAAAAAAAAAAAPlm9XwEAAAC4adrrAAEBA3ZvcmJpcwAAAFhpcGguT3JnIGxpYnZvcmJpcyAwLjguMSBNYXkgMjAxNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"></audio>
-  <audio id="clickSound" src="data:audio/ogg;base64,T2dnUwACAAAAAAAAAAD+Vb1fAAAAANvN6fUBHgF2b3JiaXMAAAAAAkSsAAAAAAAAgLsAAAAAAAC4AU9nZ1MAAAAAAAAAAAAA/lW9XwEAAAC4adrrAAEBA3ZvcmJpcwAAAFhpcGguT3JnIGxpYnZvcmJpcyAwLjguMSBNYXkgMjAxNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"></audio>
-
-  <script>
-    const hoverSound = document.getElementById("hoverSound");
-    const clickSound = document.getElementById("clickSound");
-
-    document.querySelectorAll("button, input, select, a, img").forEach(el => {
-      el.addEventListener("mouseenter", () => {
-        hoverSound.currentTime = 0;
-        hoverSound.play();
-      });
-      el.addEventListener("click", () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
-      });
-    });
-
-    const modal = document.getElementById("confirmModal");
-    const confirmText = document.getElementById("confirmText");
-    let confirmCallback;
-
-    function preConfirm() {
-      const archivos = document.getElementById("carpeta").files;
-      if (!archivos.length) {
-        alert("⚠️ Sube una carpeta primero.");
-        return;
-      }
-      confirmText.textContent = `¿Quieres subir ${archivos.length} archivos en esta página?`;
-      modal.style.display = "flex";
-      confirmCallback = () => generar();
-    }
-
-    function confirmar(ok) {
-      modal.style.display = "none";
-      if (ok && confirmCallback) confirmCallback();
-    }
-
-    function generar() {
-      const input = document.getElementById("carpeta");
-      const archivos = input.files;
-      const progreso = document.getElementById("progreso");
-      const data = { content: [] };
-
-      if (!archivos.length) {
-        alert("⚠️ Sube una carpeta primero.");
-        return;
-      }
-
-      let i = 0;
-      function procesar() {
-        if (i < archivos.length) {
-          let ruta = archivos[i].webkitRelativePath.split("/").slice(1).join("/");
-          if (ruta) {
-            data.content.push({ path: ruta });
-          }
-          i++;
-          progreso.value = (i / archivos.length) * 100;
-          setTimeout(procesar, 10);
-        } else {
-          window.generatedJSON = JSON.stringify(data, null, 4);
-          document.getElementById("descargarBtn").style.display = "inline-block";
-        }
-      }
-      procesar();
-    }
-
-    function descargar() {
-      const blob = new Blob([window.generatedJSON], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "contents.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function generarManifest() {
-      const nombre = document.getElementById("nombre").value;
-      const autor = document.getElementById("autor").value;
-      const descripcion = document.getElementById("descripcion").value;
-      const version = document.getElementById("version").value.split(".").map(Number);
-      const minVersion = document.getElementById("minVersion").value.split(".").map(Number);
-      const tipo = document.getElementById("tipo").value;
-
-      const manifest = {
-        format_version: 2,
-        metadata: { authors: [autor] },
-        header: {
-          name: nombre,
-          description: descripcion,
-          min_engine_version: minVersion,
-          uuid: crypto.randomUUID(),
-          version: version
-        },
-        modules: [
-          {
-            type: tipo,
-            uuid: crypto.randomUUID(),
-            version: version
-          }
-        ]
-      };
-
-      const blob = new Blob([JSON.stringify(manifest, null, 4)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "manifest.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
 </body>
 </html>
