@@ -2,362 +2,207 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JLMC Content</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador Packs</title>
   <style>
-    :root {
-      --verde: #34A853;
-      --rojo: #E63946;
-      --azul: #457B9D;
-      --marron: #6D4C41;
-      --beige: #F1E8DA;
-      --blanco: #ffffff;
+    /* 🎨 THEME */
+    :root{
+      --bg: #0a0c0d;
+      --panel: rgba(18,22,25,0.6);
+      --glass: rgba(255,255,255,0.08);
+      --accent1: #00ff88;
+      --accent2: #00bfff;
+      --muted: #aeb6bf;
+      --radius: 20px;
+      --shadow: 0 10px 40px rgba(0,0,0,0.7);
+      font-family: "Segoe UI", "Inter", sans-serif;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      width: 100%; height: 100%;
-      font-family: 'Poppins', sans-serif;
-      color: var(--blanco);
-      background: linear-gradient(270deg, var(--verde), var(--azul));
-      background-size: 400% 400%;
-      animation: gradientRotate 20s linear infinite;
+    *{margin:0;padding:0;box-sizing:border-box;transition:all 0.25s ease;}
+    html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;}
+
+    /* 🏷 HEADER */
+    header{
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 26px;position:sticky;top:0;z-index:100;
     }
-    @keyframes gradientRotate {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .brand{display:flex;gap:14px;align-items:center;}
+    .logo{
+      width:56px;height:56px;border-radius:16px;
+      background:var(--panel);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:20px;
+      color:var(--accent1);
+      box-shadow:0 0 18px var(--accent1);
+    }
+    .logo img{width:100%;height:100%;border-radius:50%;object-fit:contain;}
+    .title h1{margin:0;font-size:20px;font-weight:800;}
+    .title p{margin:0;font-size:13px;color:var(--muted)}
+
+    /* 📦 CARDS */
+    main{padding:2rem;display:flex;flex-direction:column;align-items:center;gap:2rem;position:relative;z-index:2}
+    section{width:100%;max-width:640px;}
+    .card{
+      background:var(--panel);
+      border-radius:var(--radius);
+      padding:1.5rem;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      transition:transform 0.3s ease,box-shadow 0.3s ease;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 0 28px var(--accent2)}
+    .card h2{
+      font-size:1.6rem;text-align:center;margin-bottom:1rem;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
 
-    header { text-align: center; padding: 15px; }
-    header img {
-      width: 90px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      box-shadow: 0 0 15px #00ffcc, 0 0 25px #0066ff;
-      animation: glow 3s ease-in-out infinite alternate;
+    /* 🔘 Inputs */
+    input,textarea,select{
+      width:100%;margin:8px 0;padding:12px;border-radius:12px;
+      border:1.5px solid var(--accent1);background:var(--glass);
+      color:#fff;font-size:1rem;
     }
-    @keyframes glow {
-      from { box-shadow: 0 0 15px #00ffcc, 0 0 25px #0066ff; }
-      to   { box-shadow: 0 0 25px #ffcc00, 0 0 40px #ff004c; }
+    input:focus,textarea:focus,select:focus{
+      border-color:var(--accent2);outline:none;background:rgba(255,255,255,0.15)
     }
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 5px;
-      background: linear-gradient(90deg, var(--verde), var(--rojo), var(--azul));
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientText 6s linear infinite;
+    textarea{resize:vertical;min-height:80px}
+
+    .btn{
+      width:100%;margin:12px 0;padding:12px;border:none;border-radius:12px;
+      font-size:1rem;font-weight:bold;cursor:pointer;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:#041010;box-shadow:0 0 12px var(--accent1);
     }
-    header p { font-size: 0.9rem; opacity: 0.9; }
-    @keyframes gradientText {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .btn:hover{transform:scale(1.05);box-shadow:0 0 18px var(--accent2)}
+
+    /* 📜 Lista archivos */
+    ul{max-height:150px;overflow-y:auto;margin-top:10px;padding-left:15px;font-size:.9rem}
+    ul li{margin:3px 0;color:#cfd9df}
+
+    /* 📊 Barra progreso */
+    .progress-container{
+      width:100%;background:rgba(255,255,255,0.1);border-radius:12px;
+      margin:12px 0;height:25px;overflow:hidden;border:1px solid var(--accent1)
+    }
+    .progress-bar{
+      height:100%;width:0%;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      text-align:center;color:#000;font-size:.9rem;font-weight:bold;line-height:25px;
+      transition:width 0.3s ease;
     }
 
-    section { max-width: 95%; margin: 15px auto; }
-    section h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-      color: var(--beige);
+    /* 🔗 Footer */
+    footer{
+      margin-top:auto;text-align:center;padding:1rem;color:var(--muted);
+      display:flex;flex-direction:column;gap:12px;z-index:2
     }
-    .card {
-      background: rgba(0,0,0,0.5);
-      border: 1px solid var(--marron);
-      border-radius: 14px;
-      padding: 15px;
-      margin-bottom: 15px;
-      text-align: center;
-      backdrop-filter: blur(6px);
+    .socials{display:flex;gap:14px;justify-content:center;}
+    .socials a{
+      width:46px;height:46px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--panel);
+      color:var(--muted);font-size:22px;
+      box-shadow:var(--shadow);text-decoration:none;
     }
+    .socials a:hover{
+      background:var(--accent1);color:#041010;
+      transform:scale(1.12);box-shadow:0 0 18px var(--accent2);
+    }
+    .socials img{width:100%;height:100%;border-radius:50%;object-fit:contain;}
 
-    input, textarea, select {
-      width: 100%;
-      margin: 6px 0;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1.5px solid var(--verde);
-      background: rgba(255,255,255,0.1);
-      color: var(--blanco);
-      font-size: 1rem;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--rojo);
-      background: rgba(255,255,255,0.2);
-    }
-    textarea { resize: vertical; min-height: 80px; }
-
-    .btn {
-      width: 100%;
-      margin: 8px 0;
-      padding: 12px;
-      background: var(--verde);
-      border: none;
-      border-radius: 10px;
-      color: var(--blanco);
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .btn:hover { background: var(--rojo); }
-    .btn:active { background: var(--azul); }
-
-    .file-input { display: block; margin: 10px 0; }
-    .file-input span {
-      display: block;
-      padding: 12px;
-      text-align: center;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-
-    /* 📂 Lista de archivos */
-    #listaArchivos {
-      text-align: left;
-      margin-top: 10px;
-      max-height: 150px;
-      overflow-y: auto;
-      font-size: 0.85rem;
-      background: rgba(255,255,255,0.05);
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    #listaArchivos li {
-      margin: 2px 0;
-      padding-left: 5px;
-    }
-
-    /* 📊 Barra de progreso */
-    .progress-container {
-      width: 100%;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      margin: 12px 0;
-      height: 25px;
-      overflow: hidden;
-      border: 1px solid var(--verde);
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: repeating-linear-gradient(
-        45deg,
-        var(--verde),
-        var(--verde) 10px,
-        var(--azul) 10px,
-        var(--azul) 20px
-      );
-      background-size: 200% 200%;
-      animation: stripes 1s linear infinite;
-      text-align: center;
-      color: var(--blanco);
-      font-size: 0.9rem;
-      font-weight: bold;
-      line-height: 25px;
-      transition: width 0.3s ease;
-    }
-    @keyframes stripes {
-      from { background-position: 0 0; }
-      to   { background-position: 40px 0; }
-    }
-
-    .socials img {
-      width: 40px;
-      margin: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .socials img:hover { transform: scale(1.15); }
-
-    footer {
-      text-align: center;
-      padding: 12px;
-      font-size: 0.8rem;
-      background: rgba(0,0,0,0.6);
-      border-top: 1px solid var(--marron);
-    }
+    /* 🌌 Fondo */
+    canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
   </style>
 </head>
 <body>
+  <canvas id="fondo"></canvas>
+
+  <!-- Header -->
   <header>
-    <img src="logo.jpg" alt="Logo JLMC">
-    <h1>JLMC Content</h1>
-    <p>Creado por JLMC24</p>
+    <div class="brand">
+      <div class="logo"><img src="NEOMC11.png" alt="logo"></div>
+      <div class="title">
+        <h1>Generador de Packs</h1>
+        <p>By JLMC24</p>
+      </div>
+    </div>
   </header>
 
-  <!-- Generador contents.json -->
-  <section>
-    <h2>Generar contents.json</h2>
-    <div class="card">
-      <label class="file-input">
-        <span>Seleccionar carpeta</span>
+  <main>
+    <!-- contents.json -->
+    <section>
+      <div class="card">
+        <h2>Generar contents.json</h2>
         <input type="file" id="carpeta" webkitdirectory directory multiple onchange="mostrarArchivos()">
-      </label>
-
-      <!-- Lista de archivos cargados -->
-      <ul id="listaArchivos"></ul>
-
-      <button class="btn" onclick="preConfirm()">Generar</button>
-
-      <!-- Barra de progreso -->
-      <div class="progress-container" id="progressContainer" style="display:none;">
-        <div class="progress-bar" id="progressBar">0%</div>
+        <ul id="listaArchivos"></ul>
+        <button class="btn" onclick="preConfirm()">Generar</button>
+        <div class="progress-container" id="progressContainer" style="display:none;">
+          <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+        <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar contents.json</button>
       </div>
+    </section>
 
-      <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar contents.json</button>
-    </div>
-  </section>
-
-  <!-- Manifest Generator -->
-  <section>
-    <h2>Generar manifest.json</h2>
-    <div class="card">
-      <input type="text" id="nombre" placeholder="Nombre del paquete">
-      <input type="text" id="autor" placeholder="Autor">
-      <textarea id="descripcion" placeholder="Descripción"></textarea>
-      <input type="text" id="version" placeholder="Versión (ej: 1.0.0)">
-      <input type="text" id="minVersion" placeholder="Versión mínima (ej: 1.21.0)">
-      <select id="tipo">
-        <option value="resources">Resource Pack</option>
-        <option value="data">Behavior Pack</option>
-        <option value="addon">Addon con script</option>
-      </select>
-      <button class="btn" onclick="generarManifest()">Generar manifest.json</button>
-    </div>
-  </section>
-
-  <!-- Redes Sociales -->
-  <section>
-    <h2>Mis Redes</h2>
-    <div class="card socials">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" onclick="window.open('https://www.youtube.com/channel/UC0VNq66Sf4HEAzGlOD45FfQ')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" onclick="window.open('https://discord.gg/PrJHvVqqVy')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok" onclick="window.open('https://www.tiktok.com/@neomc1')">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" onclick="window.open('https://instagram.com')">
-    </div>
-  </section>
-
-  <!-- Descargas -->
-  <section>
-    <h2>Descargas Oficiales</h2>
-    <div class="card">
-      <a href="https://learningkodes.github.io/GameStoremMC/#" class="btn">Ir a descargas oficiales</a>
-    </div>
-  </section>
+    <!-- manifest.json -->
+    <section>
+      <div class="card">
+        <h2>Generar manifest.json</h2>
+        <input type="text" id="nombre" placeholder="Nombre del paquete">
+        <input type="text" id="autor" placeholder="Autor">
+        <textarea id="descripcion" placeholder="Descripción"></textarea>
+        <input type="text" id="version" placeholder="Versión (ej: 1.0.0)">
+        <input type="text" id="minVersion" placeholder="Versión mínima (ej: 1.21.0)">
+        <select id="tipo">
+          <option value="resources">Resource Pack</option>
+          <option value="data">Behavior Pack</option>
+          <option value="addon">Addon con script</option>
+        </select>
+        <button class="btn" onclick="generarManifest()">Generar manifest.json</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    © 2025 JLMC24
+    <div class="socials">
+      <a href="https://youtube.com/@jlmc2?si=_9W1Q1HFtGVDalyF"><img src="yt.png" alt="YouTube"></a>
+      <a href="https://www.tiktok.com/@neomc1?_t=ZS-8zlYOLr7AxU&_r=1"><img src="tiktok.png" alt="TikTok"></a>
+      <a href="https://www.instagram.com/neomc12?igsh=MXNqYmcwNHZmOGx3Yg=="><img src="inta.jpg" alt="Instagram"></a>
+    </div>
+    <div>© 2025 JLMC24</div>
   </footer>
 
   <script>
-    function mostrarArchivos() {
-      const lista = document.getElementById("listaArchivos");
-      lista.innerHTML = "";
-      const archivos = document.getElementById("carpeta").files;
-      if (!archivos.length) {
-        lista.innerHTML = "<li>⚠️ No se seleccionaron archivos</li>";
-        return;
-      }
-      for (let i = 0; i < archivos.length; i++) {
-        let ruta = archivos[i].webkitRelativePath || archivos[i].name;
-        const li = document.createElement("li");
-        li.textContent = ruta;
-        lista.appendChild(li);
-      }
+    // 🌌 Fondo partículas
+    const canvas=document.getElementById("fondo"),ctx=canvas.getContext("2d");let particles=[];
+    function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+    window.addEventListener("resize",resizeCanvas);resizeCanvas();
+    class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*3+1;this.speedX=(Math.random()-.5)*1.2;this.speedY=(Math.random()-.5)*1.2;this.color=Math.random()>.5?"#00ff88":"#00bfff"}update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill()}}
+    function initParticles(){particles=[];for(let i=0;i<70;i++)particles.push(new Particle())}
+    function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});requestAnimationFrame(animateParticles)}
+    initParticles();animateParticles();
+
+    // 📂 contents.json
+    function mostrarArchivos(){
+      const lista=document.getElementById("listaArchivos");lista.innerHTML="";
+      const archivos=document.getElementById("carpeta").files;
+      if(!archivos.length){lista.innerHTML="<li>⚠️ No se seleccionaron archivos</li>";return;}
+      for(let i=0;i<archivos.length;i++){let ruta=archivos[i].webkitRelativePath||archivos[i].name;const li=document.createElement("li");li.textContent=ruta;lista.appendChild(li)}
     }
+    function preConfirm(){const archivos=document.getElementById("carpeta").files;if(!archivos.length){alert("⚠️ Sube una carpeta primero.");return;}generar()}
+    function generar(){
+      const input=document.getElementById("carpeta"),archivos=input.files,progressContainer=document.getElementById("progressContainer"),progressBar=document.getElementById("progressBar");const data={content:[]};progressContainer.style.display="block";progressBar.style.width="0%";progressBar.textContent="0%";
+      let i=0;function procesar(){if(i<archivos.length){let ruta=archivos[i].webkitRelativePath.split("/").slice(1).join("/");if(ruta)data.content.push({path:ruta});i++;let porcentaje=Math.round((i/archivos.length)*100);progressBar.style.width=porcentaje+"%";progressBar.textContent=porcentaje+"%";setTimeout(procesar,1)}else{window.generatedJSON=JSON.stringify(data,null,4);document.getElementById("descargarBtn").style.display="inline-block";progressBar.style.width="100%";progressBar.textContent="Listo"}}procesar()}
+    function descargar(){const blob=new Blob([window.generatedJSON],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="contents.json";a.click();URL.revokeObjectURL(url)}
 
-    function preConfirm() {
-      const archivos = document.getElementById("carpeta").files;
-      if (!archivos.length) {
-        alert("⚠️ Sube una carpeta primero.");
-        return;
-      }
-      generar();
-    }
-
-    function generar() {
-      const input = document.getElementById("carpeta");
-      const archivos = input.files;
-      const progressContainer = document.getElementById("progressContainer");
-      const progressBar = document.getElementById("progressBar");
-      const data = { content: [] };
-
-      progressContainer.style.display = "block";
-      progressBar.style.width = "0%";
-      progressBar.textContent = "0%";
-
-      let i = 0;
-      function procesar() {
-        if (i < archivos.length) {
-          let ruta = archivos[i].webkitRelativePath.split("/").slice(1).join("/");
-          if (ruta) {
-            data.content.push({ path: ruta });
-          }
-          i++;
-          let porcentaje = Math.round((i / archivos.length) * 100);
-          progressBar.style.width = porcentaje + "%";
-          progressBar.textContent = porcentaje + "%";
-          setTimeout(procesar, 30);
-        } else {
-          window.generatedJSON = JSON.stringify(data, null, 4);
-          document.getElementById("descargarBtn").style.display = "inline-block";
-          progressBar.style.width = "100%";
-          progressBar.textContent = "Listo";
-        }
-      }
-      procesar();
-    }
-
-    function descargar() {
-      const blob = new Blob([window.generatedJSON], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "contents.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function generarManifest() {
-      const nombre = document.getElementById("nombre").value;
-      const autor = document.getElementById("autor").value;
-      const descripcion = document.getElementById("descripcion").value;
-      const version = document.getElementById("version").value.split(".").map(Number);
-      const minVersion = document.getElementById("minVersion").value.split(".").map(Number);
-      const tipo = document.getElementById("tipo").value;
-
-      const manifest = {
-        format_version: 2,
-        metadata: { authors: [autor] },
-        header: {
-          name: nombre,
-          description: descripcion,
-          min_engine_version: minVersion,
-          uuid: crypto.randomUUID(),
-          version: version
-        },
-        modules: [
-          {
-            type: tipo,
-            uuid: crypto.randomUUID(),
-            version: version
-          }
-        ]
-      };
-
-      const blob = new Blob([JSON.stringify(manifest, null, 4)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "manifest.json";
-      a.click();
-      URL.revokeObjectURL(url);
+    // 📄 manifest.json
+    function generarManifest(){
+      const nombre=document.getElementById("nombre").value,autor=document.getElementById("autor").value,descripcion=document.getElementById("descripcion").value,version=document.getElementById("version").value.split(".").map(Number),minVersion=document.getElementById("minVersion").value.split(".").map(Number),tipo=document.getElementById("tipo").value;
+      const manifest={format_version:2,metadata:{authors:[autor]},header:{name:nombre,description:descripcion,min_engine_version:minVersion,uuid:crypto.randomUUID(),version:version},modules:[{type:tipo,uuid:crypto.randomUUID(),version:version}]};
+      const blob=new Blob([JSON.stringify(manifest,null,4)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="manifest.json";a.click();URL.revokeObjectURL(url);
     }
   </script>
 </body>
