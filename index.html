@@ -3,131 +3,369 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador Packs</title>
+  <title>Generador de Packs</title>
   <style>
-    /* 🎨 THEME */
-    :root{
-      --bg: #0a0c0d;
-      --panel: rgba(18,22,25,0.6);
-      --glass: rgba(255,255,255,0.08);
-      --accent1: #00ff88;
-      --accent2: #00bfff;
-      --muted: #aeb6bf;
-      --radius: 20px;
-      --shadow: 0 10px 40px rgba(0,0,0,0.7);
-      font-family: "Segoe UI", "Inter", sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    :root {
+      --bg: #0a0b1a;
+      --panel: rgba(20, 22, 36, 0.85);
+      --glass: rgba(255, 255, 255, 0.1);
+      --accent1: #6ee7b7;
+      --accent2: #60a5fa;
+      --accent3: #a78bfa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --error: #f87171;
+      --radius: 16px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      --gradient: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box;transition:all 0.25s ease;}
-    html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;}
-
-    /* 🏷 HEADER */
-    header{
-      backdrop-filter: blur(14px);
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      display:flex;align-items:center;justify-content:space-between;
-      padding:16px 26px;position:sticky;top:0;z-index:100;
-    }
-    .brand{display:flex;gap:14px;align-items:center;}
-    .logo{
-      width:56px;height:56px;border-radius:16px;
-      background:var(--panel);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:20px;
-      color:var(--accent1);
-      box-shadow:0 0 18px var(--accent1);
-    }
-    .logo img{width:100%;height:100%;border-radius:50%;object-fit:contain;}
-    .title h1{margin:0;font-size:20px;font-weight:800;}
-    .title p{margin:0;font-size:13px;color:var(--muted)}
-
-    /* 📦 CARDS */
-    main{padding:2rem;display:flex;flex-direction:column;align-items:center;gap:2rem;position:relative;z-index:2}
-    section{width:100%;max-width:640px;}
-    .card{
-      background:var(--panel);
-      border-radius:var(--radius);
-      padding:1.5rem;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,0.08);
-      backdrop-filter:blur(12px);
-      transition:transform 0.3s ease,box-shadow 0.3s ease;
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 0 28px var(--accent2)}
-    .card h2{
-      font-size:1.6rem;text-align:center;margin-bottom:1rem;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* 🔘 Inputs */
-    input,textarea,select{
-      width:100%;margin:8px 0;padding:12px;border-radius:12px;
-      border:1.5px solid var(--accent1);background:var(--glass);
-      color:#fff;font-size:1rem;
-    }
-    input:focus,textarea:focus,select:focus{
-      border-color:var(--accent2);outline:none;background:rgba(255,255,255,0.15)
-    }
-    textarea{resize:vertical;min-height:80px}
-
-    .btn{
-      width:100%;margin:12px 0;padding:12px;border:none;border-radius:12px;
-      font-size:1rem;font-weight:bold;cursor:pointer;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      color:#041010;box-shadow:0 0 12px var(--accent1);
-    }
-    .btn:hover{transform:scale(1.05);box-shadow:0 0 18px var(--accent2)}
-
-    /* 📜 Lista archivos */
-    ul{max-height:150px;overflow-y:auto;margin-top:10px;padding-left:15px;font-size:.9rem}
-    ul li{margin:3px 0;color:#cfd9df}
-
-    /* 📊 Barra progreso */
-    .progress-container{
-      width:100%;background:rgba(255,255,255,0.1);border-radius:12px;
-      margin:12px 0;height:25px;overflow:hidden;border:1px solid var(--accent1)
-    }
-    .progress-bar{
-      height:100%;width:0%;background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      text-align:center;color:#000;font-size:.9rem;font-weight:bold;line-height:25px;
-      transition:width 0.3s ease;
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      overscroll-behavior: none;
     }
 
-    /* 🔗 Footer */
-    footer{
-      margin-top:auto;text-align:center;padding:1rem;color:var(--muted);
-      display:flex;flex-direction:column;gap:12px;z-index:2
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.95;
     }
-    .socials{display:flex;gap:14px;justify-content:center;}
-    .socials a{
-      width:46px;height:46px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      background:var(--panel);
-      color:var(--muted);font-size:22px;
-      box-shadow:var(--shadow);text-decoration:none;
-    }
-    .socials a:hover{
-      background:var(--accent1);color:#041010;
-      transform:scale(1.12);box-shadow:0 0 18px var(--accent2);
-    }
-    .socials img{width:100%;height:100%;border-radius:50%;object-fit:contain;}
 
-    /* 🌌 Fondo */
-    canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
+    header {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px var(--accent3);
+      animation: glow 3s infinite;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 20px var(--accent3); }
+      50% { box-shadow: 0 0 30px var(--accent1); }
+      100% { box-shadow: 0 0 20px var(--accent3); }
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .title h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    main {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      z-index: 2;
+      min-height: calc(100vh - 100px);
+    }
+
+    section {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient);
+      opacity: 0.9;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 32px var(--accent2);
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: 1px solid var(--accent1);
+      background: var(--glass);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent3);
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      box-shadow: 0 0 12px var(--accent3);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .file-input-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      background: var(--gradient);
+      color: #041010;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--accent1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      max-width: 250px;
+      text-align: center;
+    }
+
+    .file-input-label:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--accent3);
+      background: linear-gradient(135deg, var(--accent3), var(--accent1));
+    }
+
+    .file-input-label::before {
+      content: '🌌';
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .file-input-label span {
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--gradient);
+      color: #041010;
+      box-shadow: 0 0 12px var(--accent1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 250px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--accent3);
+    }
+
+    ul {
+      max-height: 140px;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .progress-container {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      height: 20px;
+      overflow: hidden;
+      border: 1px solid var(--accent1);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--gradient);
+      text-align: center;
+      color: #041010;
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 20px;
+      transition: width 0.4s ease;
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 0.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 1rem;
+      color: var(--muted);
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .socials {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .socials a {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+    }
+
+    .socials a:hover {
+      background: var(--gradient);
+      color: #041010;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--accent3);
+    }
+
+    .socials img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .splash-inputs textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .splash-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      text-align: center;
+      opacity: 0.85;
+    }
   </style>
 </head>
 <body>
   <canvas id="fondo"></canvas>
 
-  <!-- Header -->
   <header>
     <div class="brand">
       <div class="logo"><img src="NEOMC11.png" alt="logo"></div>
       <div class="title">
         <h1>Generador de Packs</h1>
-        <p>By JLMC24</p>
+        <p>By JLMC24 - Galaxia Edition</p>
       </div>
     </div>
   </header>
@@ -137,13 +375,17 @@
     <section>
       <div class="card">
         <h2>Generar contents.json</h2>
-        <input type="file" id="carpeta" webkitdirectory directory multiple onchange="mostrarArchivos()">
+        <div class="file-input-wrapper">
+          <input type="file" id="carpeta" webkitdirectory directory multiple onchange="mostrarArchivos()">
+          <label for="carpeta" class="file-input-label"><span>Seleccionar Carpeta</span></label>
+        </div>
         <ul id="listaArchivos"></ul>
         <button class="btn" onclick="preConfirm()">Generar</button>
         <div class="progress-container" id="progressContainer" style="display:none;">
           <div class="progress-bar" id="progressBar">0%</div>
         </div>
-        <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar contents.json</button>
+        <button id="descargarBtn" class="btn" style="display:none;" onclick="descargar()">Descargar</button>
+        <div id="errorContents" class="error-message" style="display:none;"></div>
       </div>
     </section>
 
@@ -151,17 +393,39 @@
     <section>
       <div class="card">
         <h2>Generar manifest.json</h2>
+        <div class="file-input-wrapper">
+          <input type="file" id="manifestFolder" webkitdirectory directory multiple onchange="mostrarArchivosManifest()">
+          <label for="manifestFolder" class="file-input-label"><span>Seleccionar Carpeta</span></label>
+        </div>
+        <ul id="listaArchivosManifest"></ul>
         <input type="text" id="nombre" placeholder="Nombre del paquete">
         <input type="text" id="autor" placeholder="Autor">
         <textarea id="descripcion" placeholder="Descripción"></textarea>
         <input type="text" id="version" placeholder="Versión (ej: 1.0.0)">
         <input type="text" id="minVersion" placeholder="Versión mínima (ej: 1.21.0)">
+        <input type="text" id="license" placeholder="Licencia (ej: MIT)">
+        <input type="text" id="url" placeholder="URL del pack (opcional)">
+        <textarea id="notes" placeholder="Notas adicionales (para settings si hay subpacks)"></textarea>
         <select id="tipo">
           <option value="resources">Resource Pack</option>
           <option value="data">Behavior Pack</option>
           <option value="addon">Addon con script</option>
         </select>
-        <button class="btn" onclick="generarManifest()">Generar manifest.json</button>
+        <button class="btn" onclick="generarManifest()">Generar</button>
+        <div id="errorManifest" class="error-message" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- splashes.json -->
+    <section>
+      <div class="card">
+        <h2>Generar splashes.json</h2>
+        <div class="splash-inputs">
+          <textarea id="splashText" placeholder="Escribe los splashes separados por comas, terminando con '...' (ej: Luis, Pedro, árbitro...)"></textarea>
+          <div class="splash-note">Separa los splashes con comas y termina con "..."</div>
+        </div>
+        <button class="btn" onclick="generarSplashes()">Generar</button>
+        <div id="errorSplashes" class="error-message" style="display:none;"></div>
       </div>
     </section>
   </main>
@@ -176,33 +440,354 @@
   </footer>
 
   <script>
-    // 🌌 Fondo partículas
-    const canvas=document.getElementById("fondo"),ctx=canvas.getContext("2d");let particles=[];
-    function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
-    window.addEventListener("resize",resizeCanvas);resizeCanvas();
-    class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*3+1;this.speedX=(Math.random()-.5)*1.2;this.speedY=(Math.random()-.5)*1.2;this.color=Math.random()>.5?"#00ff88":"#00bfff"}update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill()}}
-    function initParticles(){particles=[];for(let i=0;i<70;i++)particles.push(new Particle())}
-    function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});requestAnimationFrame(animateParticles)}
-    initParticles();animateParticles();
+    // Particle Background (Galactic Effect)
+    const canvas = document.getElementById('fondo');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-    // 📂 contents.json
-    function mostrarArchivos(){
-      const lista=document.getElementById("listaArchivos");lista.innerHTML="";
-      const archivos=document.getElementById("carpeta").files;
-      if(!archivos.length){lista.innerHTML="<li>⚠️ No se seleccionaron archivos</li>";return;}
-      for(let i=0;i<archivos.length;i++){let ruta=archivos[i].webkitRelativePath||archivos[i].name;const li=document.createElement("li");li.textContent=ruta;lista.appendChild(li)}
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    function preConfirm(){const archivos=document.getElementById("carpeta").files;if(!archivos.length){alert("⚠️ Sube una carpeta primero.");return;}generar()}
-    function generar(){
-      const input=document.getElementById("carpeta"),archivos=input.files,progressContainer=document.getElementById("progressContainer"),progressBar=document.getElementById("progressBar");const data={content:[]};progressContainer.style.display="block";progressBar.style.width="0%";progressBar.textContent="0%";
-      let i=0;function procesar(){if(i<archivos.length){let ruta=archivos[i].webkitRelativePath.split("/").slice(1).join("/");if(ruta)data.content.push({path:ruta});i++;let porcentaje=Math.round((i/archivos.length)*100);progressBar.style.width=porcentaje+"%";progressBar.textContent=porcentaje+"%";setTimeout(procesar,1)}else{window.generatedJSON=JSON.stringify(data,null,4);document.getElementById("descargarBtn").style.display="inline-block";progressBar.style.width="100%";progressBar.textContent="Listo"}}procesar()}
-    function descargar(){const blob=new Blob([window.generatedJSON],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="contents.json";a.click();URL.revokeObjectURL(url)}
 
-    // 📄 manifest.json
-    function generarManifest(){
-      const nombre=document.getElementById("nombre").value,autor=document.getElementById("autor").value,descripcion=document.getElementById("descripcion").value,version=document.getElementById("version").value.split(".").map(Number),minVersion=document.getElementById("minVersion").value.split(".").map(Number),tipo=document.getElementById("tipo").value;
-      const manifest={format_version:2,metadata:{authors:[autor]},header:{name:nombre,description:descripcion,min_engine_version:minVersion,uuid:crypto.randomUUID(),version:version},modules:[{type:tipo,uuid:crypto.randomUUID(),version:version}]};
-      const blob=new Blob([JSON.stringify(manifest,null,4)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="manifest.json";a.click();URL.revokeObjectURL(url);
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 1;
+        this.speedY = (Math.random() - 0.5) * 1;
+        this.opacity = Math.random() * 0.5 + 0.5;
+        this.color = Math.random() < 0.33 ? '#6ee7b7' : Math.random() < 0.66 ? '#60a5fa' : '#a78bfa';
+        this.glow = Math.random() * 5 + 2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        this.opacity = Math.max(0.3, this.opacity + (Math.random() - 0.5) * 0.02);
+      }
+
+      draw() {
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = this.glow;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function connectParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 100) {
+            ctx.strokeStyle = `rgba(${particles[i].color === '#6ee7b7' ? '110,231,183' : particles[i].color === '#60a5fa' ? '96,165,250' : '167,139,250'}, ${0.8 - distance / 100})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(window.innerWidth / 6, 250);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    // contents.json
+    function mostrarArchivos() {
+      const lista = document.getElementById('listaArchivos');
+      lista.innerHTML = '';
+      const archivos = document.getElementById('carpeta').files;
+      if (!archivos.length) {
+        lista.innerHTML = '<li>⚠️ No se seleccionaron archivos</li>';
+        return;
+      }
+      Array.from(archivos).forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = file.webkitRelativePath || file.name;
+        lista.appendChild(li);
+      });
+    }
+
+    function preConfirm() {
+      const archivos = document.getElementById('carpeta').files;
+      const error = document.getElementById('errorContents');
+      error.style.display = 'none';
+      if (!archivos.length) {
+        error.textContent = '⚠️ Sube una carpeta primero.';
+        error.style.display = 'block';
+        return;
+      }
+      generar();
+    }
+
+    function generar() {
+      const archivos = document.getElementById('carpeta').files;
+      const progressContainer = document.getElementById('progressContainer');
+      const progressBar = document.getElementById('progressBar');
+      const data = { content: [] };
+      progressContainer.style.display = 'block';
+      progressBar.style.width = '0%';
+      progressBar.textContent = '0%';
+
+      let i = 0;
+      function procesar() {
+        if (i < archivos.length) {
+          const ruta = archivos[i].webkitRelativePath.split('/').slice(1).join('/');
+          if (ruta) data.content.push({ path: ruta });
+          i++;
+          const porcentaje = Math.round((i / archivos.length) * 100);
+          progressBar.style.width = `${porcentaje}%`;
+          progressBar.textContent = `${porcentaje}%`;
+          requestAnimationFrame(procesar);
+        } else {
+          window.generatedJSON = JSON.stringify(data, null, 2);
+          document.getElementById('descargarBtn').style.display = 'inline-block';
+          progressBar.textContent = 'Listo';
+        }
+      }
+      procesar();
+    }
+
+    function descargar() {
+      const blob = new Blob([window.generatedJSON], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'contents.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // manifest.json
+    function mostrarArchivosManifest() {
+      const lista = document.getElementById('listaArchivosManifest');
+      lista.innerHTML = '';
+      const archivos = document.getElementById('manifestFolder').files;
+      if (!archivos.length) {
+        lista.innerHTML = '<li>⚠️ No se seleccionaron archivos</li>';
+        return;
+      }
+      Array.from(archivos).forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = file.webkitRelativePath || file.name;
+        lista.appendChild(li);
+      });
+    }
+
+    function generarManifest() {
+      const archivos = document.getElementById('manifestFolder').files;
+      const nombre = document.getElementById('nombre').value.trim();
+      const autor = document.getElementById('autor').value.trim();
+      const descripcion = document.getElementById('descripcion').value.trim();
+      const versionStr = document.getElementById('version').value.trim();
+      const minVersionStr = document.getElementById('minVersion').value.trim();
+      const license = document.getElementById('license').value.trim();
+      const url = document.getElementById('url').value.trim();
+      const notes = document.getElementById('notes').value.trim();
+      const tipo = document.getElementById('tipo').value;
+      const error = document.getElementById('errorManifest');
+      error.style.display = 'none';
+
+      if (!archivos.length) {
+        error.textContent = '⚠️ Sube una carpeta primero.';
+        error.style.display = 'block';
+        return;
+      }
+      if (!nombre || !autor || !descripcion || !versionStr || !minVersionStr) {
+        error.textContent = '⚠️ Completa todos los campos requeridos.';
+        error.style.display = 'block';
+        return;
+      }
+
+      const version = versionStr.split('.').map(Number);
+      const minVersion = minVersionStr.split('.').map(Number);
+
+      // Detectar subpacks
+      const subpackSet = new Set();
+      Array.from(archivos).forEach(file => {
+        const path = file.webkitRelativePath.split('/').slice(1);
+        if (path[0] === 'subpacks' && path[1]) {
+          subpackSet.add(path[1]);
+        }
+      });
+
+      const subpacks = [];
+      const descriptions = {
+        low: "Low\n\nThis option brings optimized Complementary clouds with less capacity since it is the feature that consumes the most resources.",
+        medium: "Medium\n\nThis option brings all the features that this shader brings except for the starry sky since these features greatly affect performance.",
+        high: "High\n\nThis option adds multiple stars at night which generates a lot of lag, including all the full features."
+      };
+      subpackSet.forEach(folder => {
+        const key = folder.toLowerCase();
+        const subpackName = descriptions[key] || folder.charAt(0).toUpperCase() + folder.slice(1);
+        subpacks.push({
+          folder_name: folder,
+          name: subpackName,
+          memory_tier: 1
+        });
+      });
+
+      // Determinar módulos basados en tipo
+      const modules = [];
+      let moduleType = tipo;
+      if (tipo === 'addon') {
+        modules.push({
+          type: 'data',
+          uuid: crypto.randomUUID(),
+          version: version
+        });
+        modules.push({
+          type: 'script',
+          language: 'javascript',
+          entry: 'scripts/main.js',
+          uuid: crypto.randomUUID(),
+          version: version
+        });
+      } else {
+        modules.push({
+          type: moduleType,
+          uuid: crypto.randomUUID(),
+          version: version
+        });
+      }
+
+      // Detectar si hay scripts para agregar dependency
+      const dependencies = [];
+      if (tipo === 'addon') {
+        dependencies.push({
+          module_name: "@minecraft/server",
+          version: "1.13.0"
+        });
+      }
+
+      // Metadata
+      const metadata = {
+        authors: [autor]
+      };
+      if (license) metadata.license = license;
+      if (url) metadata.url = url;
+
+      // Settings si hay subpacks y notes
+      let settings = [];
+      if (subpacks.length > 0 && notes) {
+        settings = [{
+          type: "label",
+          text: notes
+        }];
+      }
+
+      const manifest = {
+        format_version: 2,
+        header: {
+          name: nombre,
+          description: descripcion,
+          uuid: crypto.randomUUID(),
+          version: version,
+          min_engine_version: minVersion
+        },
+        modules: modules,
+        dependencies: dependencies,
+        metadata: metadata
+      };
+
+      if (subpacks.length > 0) {
+        manifest.subpacks = subpacks;
+      }
+      if (settings.length > 0) {
+        manifest.settings = settings;
+      }
+
+      const blob = new Blob([JSON.stringify(manifest, null, 2)], { type: 'application/json' });
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = 'manifest.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // splashes.json
+    function generarSplashes() {
+      const splashText = document.getElementById('splashText').value.trim();
+      const error = document.getElementById('errorSplashes');
+      error.style.display = 'none';
+
+      if (!splashText) {
+        error.textContent = '⚠️ Ingresa al menos un splash.';
+        error.style.display = 'block';
+        return;
+      }
+
+      // Verificar si termina con "..."
+      if (!splashText.endsWith('...')) {
+        error.textContent = '⚠️ Los splashes deben terminar con "...".';
+        error.style.display = 'block';
+        return;
+      }
+
+      // Procesar splashes
+      const splashes = splashText
+        .slice(0, -3)
+        .split(',')
+        .map(splash => splash.trim())
+        .filter(splash => splash !== '');
+
+      if (splashes.length === 0) {
+        error.textContent = '⚠️ Ingresa al menos un splash válido.';
+        error.style.display = 'block';
+        return;
+      }
+
+      const data = {
+        splashes: splashes,
+        conditional: [
+          {
+            requires: { trialMode: true },
+            splashes: splashes
+          }
+        ]
+      };
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'splashes.json';
+      a.click();
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
